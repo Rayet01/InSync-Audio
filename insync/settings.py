@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 
     # Custom apps
     'users',
+    'events',
     'cloudinary_storage',
     'cloudinary',
      # Third-party apps
@@ -74,7 +75,7 @@ ROOT_URLCONF = 'insync.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -158,3 +159,5 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'optional'  # User must verify email
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True  # Automatically confirm the email
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
