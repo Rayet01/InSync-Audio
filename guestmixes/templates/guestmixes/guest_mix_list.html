@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Guest Mixes</h2>
+        <div class="row">
+            {% for mix in guest_mixes %}
+            <div class="col-md-4 mb-4">
+                <div class="card mix-card" data-mix-id="{{ mix.id }}" data-mix-title="{{ mix.title }}" data-mix-artist="{{ mix.artist }}">
+                    {% if mix.image %}
+                    <img
+                        src="{{ mix.image.url }}"
+                        class="card-img-top"
+                        alt="{{ mix.title }} Image"
+                    />
+                    {% else %}
+                    <img
+                        src="{% static 'default-mix.jpg' %}"  <!-- Default image -->
+                        class="card-img-top"
+                        alt="Default Mix Image"
+                    />
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ mix.title }}</h5>
+                        <p class="card-text">{{ mix.artist }}</p>
+                        
+                        <!-- Play/Pause button -->
+                        <button class="btn btn-primary play-button" data-audio-url="{{ mix.audio_path.url }}" data-mix-id="{{ mix.id }}">
+                            Play
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-center">No guest mixes available at the moment.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Modal for displaying likes and comments -->
+<div class="modal fade" id="mixModal" tabindex="-1" aria-labelledby="mixModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="mixModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h6>Likes</h6>
+        <p id="mixLikesCount"></p>
+
+        <h6>Comments</h6>
+        <div id="mixComments"></div>
+
+        <!-- Add Comment Form -->
+        {% if user.is_authenticated %}
+        <form id="commentForm">
+            {% csrf_token %}
+            <textarea name="text" placeholder="Add a comment"></textarea>
+            <button type="submit" class="btn btn-primary">Post Comment</button>
+        </form>
+        {% else %}
+        <p>Please log in to comment.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Wavesurfer.js -->
+<script src="https://unpkg.com/wavesurfer.js"></script>
+
+<!-- JavaScript for Play/Pause and Modal -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const playButtons = document.querySelectorAll('.play-button');
+
+        playButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const audioUrl = button.getAttribute('data-audio-url');
+                const mixId = button.getAttribute('data-mix-id');
+                const waveformContainer = document.getElementById(`waveform-${mixId}`);
+
+                // Initialize Wavesurfer
+                const wavesurfer = WaveSurfer.create({
+                    container: waveformContainer,
+                    waveColor: 'teal',
+                    progressColor: 'darkblue',
+                    height: 128,
+                });
+
+                // Load audio file
+                wavesurfer.load(audioUrl);
+
+                // Once ready, play the audio
+                wavesurfer.on('ready', function() {
+                    wavesurfer.play();
+                    button.textContent = 'Pause';
+                });
+
+                // Store the Wavesurfer instance for later use
+                waveformContainer.waveSurfer = wavesurfer;
+            });
+        });
+
+        // Modal Pop-up functionality
+        const mixCards = document.querySelectorAll('.mix-card');
+        mixCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const mixId = card.getAttribute('data-mix-id');
+                const mixTitle = card.getAttribute('data-mix-title');
+                const mixArtist = card.getAttribute('data-mix-artist');
+
+                // Fetch likes and comments
+                fetch(`/mix/${mixId}/details/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Populate modal with likes and comments data
+                        document.getElementById('mixModalLabel').textContent = `${mixTitle} by ${mixArtist}`;
+                        document.getElementById('mixLikesCount').textContent = `Likes: ${data.likes_count}`;
+                        let commentsHTML = '';
+                        data.comments.forEach(comment => {
+                            commentsHTML += `<p><strong>${comment.user}</strong>: ${comment.text} (Posted on ${comment.created_at})</p>`;
+                        });
+                        document.getElementById('mixComments').innerHTML = commentsHTML;
+                    });
+
+                // Show the modal
+                const modal = new bootstrap.Modal(document.getElementById('mixModal'));
+                modal.show();
+            });
+        });
+
+        // Handle comment form submission
+        const commentForm = document.getElementById('commentForm');
+        if (commentForm) {
+            commentForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const mixId = document.getElementById('mixModalLabel').getAttribute('data-mix-id');
+                const text = commentForm.querySelector('textarea').value;
+                const csrfToken = document.querySelector('[name="csrfmiddlewaretoken"]').value;
+
+                fetch(`/mix/${mixId}/comment/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken,
+                    },
+                    body: JSON.stringify({ text }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Append the new comment
+                    const newCommentHTML = `<p><strong>${data.user}</strong>: ${data.text} (Posted on ${data.created_at})</p>`;
+                    document.getElementById('mixComments').innerHTML += newCommentHTML;
+                    commentForm.querySelector('textarea').value = ''; // Reset form
+                });
+            });
+        }
+    });
+</script>
+{% endblock %}

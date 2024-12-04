@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     # Custom apps
     'users',
     'events',
+    'guestmixes',
     'cloudinary_storage',
     'cloudinary',
      # Third-party apps

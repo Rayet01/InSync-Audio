@@ -1,5 +1,7 @@
+{% extends "base.html" %}
 {% load static %}
 
+{% block content %}
 <section class="py-5">
   <div class="container">
     <h2 class="text-center mb-4">Upcoming Events</h2>
@@ -32,8 +34,7 @@
                 style="background-color: #d12d9c; color: black"
                 target="_blank"
                 rel="noopener noreferrer"
-                >Buy Tickets</a
-              >
+                >Buy Tickets</a>
             </div>
           </div>
         </div>
@@ -43,3 +44,4 @@
     </div>
   </div>
 </section>
+{% endblock %}
