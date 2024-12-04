@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import GuestMix, Event
+from .models import GuestMix, Event  
 
 def index(request):
     guest_mixes = GuestMix.objects.all()[:3]  # Featured guest mixes, limit to 3
@@ -8,3 +8,4 @@ def index(request):
         'guest_mixes': guest_mixes,
         'upcoming_events': upcoming_events,
     })
+

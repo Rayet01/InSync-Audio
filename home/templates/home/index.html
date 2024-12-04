@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Carousel Slider -->
+<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img
+        src=""
+        class="d-block w-100"
+        alt="Slide 1"
+        style="height: 500px; object-fit: cover"
+      />
+      <div class="carousel-caption">
+        <h5 class="display-4">Welcome to InSync Audio</h5>
+        <p class="lead">
+          Bringing you the best music events and guest mixes.
+        </p>
+        <a href="{% url 'event_list' %}" class="btn btn-lg" style="background-color: #5ea2ef; color: black">View Upcoming Events</a>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img
+        src=""
+        class="d-block w-100"
+        alt="Slide 2"
+        style="height: 500px; object-fit: cover"
+      />
+      <div class="carousel-caption">
+        <h5 class="display-4">Join Our Community</h5>
+        <p class="lead">Be part of our vibrant music-loving community!</p>
+        <a href="{% url 'guest_mix_list' %}" class="btn btn-lg" style="background-color: #5ea2ef; color: black">Listen Now</a>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img
+        src="{% static 'images/unorthodox-event-queer-drum-n-bass-rave.jpg' %}"
+        class="d-block w-100"
+        alt="Slide 3"
+        style="height: 500px; object-fit: cover"
+      />
+      <div class="carousel-caption">
+        <h5 class="display-4">Experience Live Music</h5>
+        <p class="lead">Catch live performances and exciting events!</p>
+        <a href="{% url 'event_list' %}" class="btn btn-lg" style="background-color: #5ea2ef; color: black">Buy Tickets</a>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+<!-- Featured Guest Mix Section -->
+<section class="bg-light py-5">
+  <div class="container text-center">
+    <h2 class="mb-4">Featured Guest Mix</h2>
+    {% if featured_mix %}
+    <div class="row">
+      <div class="col-md-8 mx-auto">
+        <div class="card">
+          <img
+            src="{{ featured_mix.image.url }}"
+            class="card-img-top"
+            alt="{{ featured_mix.title }} Image"
+          />
+          <div class="card-body">
+            <h5 class="card-title">{{ featured_mix.title }}</h5>
+            <p class="card-text">{{ featured_mix.artist }}</p>
+            <!-- Waveform Player -->
+            <div id="waveform"></div>
+            <button id="playPauseButton" class="btn btn-primary mt-3">Play</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <p class="text-center">No featured mix available at the moment.</p>
+    {% endif %}
+  </div>
+</section>
+{% block script %}
+<script src="{% static 'js/wavesurfer.min.js' %}"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Initialize WaveSurfer
+    const waveform = WaveSurfer.create({
+      container: '#waveform',
+      waveColor: 'violet',
+      progressColor: 'purple',
+    });
+
+    // Load the audio file
+    waveform.load('{{ featured_mix.audio_file.url }}');
+
+    // Play/Pause button
+    const playPauseButton = document.getElementById('playPauseButton');
+    playPauseButton.addEventListener('click', () => {
+      waveform.playPause();
+      playPauseButton.textContent = waveform.isPlaying() ? 'Pause' : 'Play';
+    });
+  });
+</script>
+{% endblock %}
+
+{% endblock %}
