@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block content %}
 <section class="py-5">
     <div class="container">
@@ -8,7 +7,7 @@
         <div class="row">
             {% for mix in guest_mixes %}
             <div class="col-md-4 mb-4">
-                <div class="card mix-card" data-mix-id="{{ mix.id }}" data-mix-title="{{ mix.title }}" data-mix-artist="{{ mix.artist }}">
+                <div class="card">
                     {% if mix.image %}
                     <img
                         src="{{ mix.image.url }}"
@@ -30,6 +29,9 @@
                         <button class="btn btn-primary play-button" data-audio-url="{{ mix.audio_path.url }}" data-mix-id="{{ mix.id }}">
                             Play
                         </button>
+
+                        <!-- Sound wave container -->
+                        <div id="waveform-{{ mix.id }}" class="waveform-container" style="width: 100%; height: 128px;"></div>
                     </div>
                 </div>
             </div>
@@ -40,40 +42,10 @@
     </div>
 </section>
 
-<!-- Modal for displaying likes and comments -->
-<div class="modal fade" id="mixModal" tabindex="-1" aria-labelledby="mixModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="mixModalLabel"></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <h6>Likes</h6>
-        <p id="mixLikesCount"></p>
-
-        <h6>Comments</h6>
-        <div id="mixComments"></div>
-
-        <!-- Add Comment Form -->
-        {% if user.is_authenticated %}
-        <form id="commentForm">
-            {% csrf_token %}
-            <textarea name="text" placeholder="Add a comment"></textarea>
-            <button type="submit" class="btn btn-primary">Post Comment</button>
-        </form>
-        {% else %}
-        <p>Please log in to comment.</p>
-        {% endif %}
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- Wavesurfer.js -->
 <script src="https://unpkg.com/wavesurfer.js"></script>
 
-<!-- JavaScript for Play/Pause and Modal -->
+<!-- JavaScript for play/pause and wave rendering -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const playButtons = document.querySelectorAll('.play-button');
@@ -84,82 +56,42 @@
                 const mixId = button.getAttribute('data-mix-id');
                 const waveformContainer = document.getElementById(`waveform-${mixId}`);
 
-                // Initialize Wavesurfer
-                const wavesurfer = WaveSurfer.create({
-                    container: waveformContainer,
-                    waveColor: 'teal',
-                    progressColor: 'darkblue',
-                    height: 128,
-                });
+                // Check if a Wavesurfer instance already exists for this mix, if so, toggle play/pause
+                if (waveformContainer.waveSurfer) {
+                    const wavesurfer = waveformContainer.waveSurfer;
+                    
+                    // If the audio is playing, pause it, otherwise play it
+                    if (wavesurfer.isPlaying()) {
+                        wavesurfer.pause();
+                        button.textContent = 'Play'; // Update button text to "Play"
+                    } else {
+                        wavesurfer.play();
+                        button.textContent = 'Pause'; // Update button text to "Pause"
+                    }
 
-                // Load audio file
-                wavesurfer.load(audioUrl);
-
-                // Once ready, play the audio
-                wavesurfer.on('ready', function() {
-                    wavesurfer.play();
-                    button.textContent = 'Pause';
-                });
-
-                // Store the Wavesurfer instance for later use
-                waveformContainer.waveSurfer = wavesurfer;
-            });
-        });
-
-        // Modal Pop-up functionality
-        const mixCards = document.querySelectorAll('.mix-card');
-        mixCards.forEach(card => {
-            card.addEventListener('click', function() {
-                const mixId = card.getAttribute('data-mix-id');
-                const mixTitle = card.getAttribute('data-mix-title');
-                const mixArtist = card.getAttribute('data-mix-artist');
-
-                // Fetch likes and comments
-                fetch(`/mix/${mixId}/details/`)
-                    .then(response => response.json())
-                    .then(data => {
-                        // Populate modal with likes and comments data
-                        document.getElementById('mixModalLabel').textContent = `${mixTitle} by ${mixArtist}`;
-                        document.getElementById('mixLikesCount').textContent = `Likes: ${data.likes_count}`;
-                        let commentsHTML = '';
-                        data.comments.forEach(comment => {
-                            commentsHTML += `<p><strong>${comment.user}</strong>: ${comment.text} (Posted on ${comment.created_at})</p>`;
-                        });
-                        document.getElementById('mixComments').innerHTML = commentsHTML;
+                } else {
+                    // Initialize a new Wavesurfer instance for the current mix
+                    const wavesurfer = WaveSurfer.create({
+                        container: waveformContainer,
+                        waveColor: 'teal',
+                        progressColor: 'darkblue',
+                        height: 128,
                     });
 
-                // Show the modal
-                const modal = new bootstrap.Modal(document.getElementById('mixModal'));
-                modal.show();
+                    // Load the audio file
+                    wavesurfer.load(audioUrl);
+
+                    // Once ready, play the audio
+                    wavesurfer.on('ready', function() {
+                        wavesurfer.play();
+                        button.textContent = 'Pause'; // Change button text to "Pause"
+                    });
+
+                    // Store the Wavesurfer instance for later use (to toggle play/pause)
+                    waveformContainer.waveSurfer = wavesurfer;
+                }
             });
         });
-
-        // Handle comment form submission
-        const commentForm = document.getElementById('commentForm');
-        if (commentForm) {
-            commentForm.addEventListener('submit', function(event) {
-                event.preventDefault();
-                const mixId = document.getElementById('mixModalLabel').getAttribute('data-mix-id');
-                const text = commentForm.querySelector('textarea').value;
-                const csrfToken = document.querySelector('[name="csrfmiddlewaretoken"]').value;
-
-                fetch(`/mix/${mixId}/comment/`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': csrfToken,
-                    },
-                    body: JSON.stringify({ text }),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    // Append the new comment
-                    const newCommentHTML = `<p><strong>${data.user}</strong>: ${data.text} (Posted on ${data.created_at})</p>`;
-                    document.getElementById('mixComments').innerHTML += newCommentHTML;
-                    commentForm.querySelector('textarea').value = ''; // Reset form
-                });
-            });
-        }
     });
 </script>
 {% endblock %}
