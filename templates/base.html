@@ -44,13 +44,13 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <a class="nav-link" href="">Home</a>
+              <a class="nav-link" href="{% url 'home' %}">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="">Events</a>
+              <a class="nav-link" href="{% url 'event_list' %}">Events</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="">Guest Mixes</a>
+              <a class="nav-link" href="{% url 'guest_mix_list' %}">Guest Mixes</a>
             </li>
             <!-- <li class="nav-item">
               <a class="nav-link" href="">About Us</a>
@@ -61,7 +61,7 @@
             <li class="nav-item">
               <a
                 class="btn btn-outline-light me-2"
-                href=""
+                href="https://insyncaudio-8e866be95d5d.herokuapp.com/accounts/login/"
                 >Login</a
               >
             </li>
@@ -69,7 +69,7 @@
               <a
                 class="btn btn"
                 style="background-color: #5ea2ef; color: black"
-                href=""
+                href="https://insyncaudio-8e866be95d5d.herokuapp.com/accounts/signup/"
                 >Register</a
               >
             </li>
