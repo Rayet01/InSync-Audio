@@ -1,8 +1,18 @@
 {% extends 'base.html' %}
-
 {% block content %}
-<div class="container mt-5">
-    <h2>Your Profile</h2>
-    <p>Welcome, {{ user.username }}!</p>
+<div class="profile text-center mt-4 mb-4">
+    <h2>{{ user.username }}'s Profile</h2>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    {% if user.profile.avatar %}
+    <img src="{{ user.profile.avatar.url }}" alt="{{ user.username }}'s avatar" />
+    {% else %}
+    <p>No avatar uploaded.</p>
+    {% endif %}
+    <p><strong>Bio:</strong> {{ user.profile.bio }}</p>
+    <p><strong>Location:</strong> {{ user.profile.location }}</p>
+
+    <a href="{% url 'profile_edit' %}" class="btn btn-primary">Edit Profile</a>
+    <a href="{% url 'profile_delete' %}" class="btn btn-danger">Delete Profile</a>
+   
 </div>
 {% endblock %}
