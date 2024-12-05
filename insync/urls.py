@@ -25,6 +25,7 @@ urlpatterns = [
     path('', include('home.urls')),
     path('events/', include('events.urls')),
     path('guestmixes/', include('guestmixes.urls')),
+    path('users/', include('users.urls')),
     
     # Auth routes
     path('accounts/', include('allauth.urls')),

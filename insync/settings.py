@@ -163,3 +163,5 @@ ACCOUNT_CONFIRM_EMAIL_ON_GET = True  # Automatically confirm the email
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+LOGIN_REDIRECT_URL = '/users/profile/'
