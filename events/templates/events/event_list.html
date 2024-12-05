@@ -23,14 +23,14 @@
               />
             {% endif %}
             <div class="card-body">
-              <h5 class="card-title">{{ event.title }}</h5>
-              <p class="card-text">
+              <h5 class="card-title text-center">{{ event.title }}</h5>
+              <p class="card-text text-center">
                 Date: {{ event.date }}<br />
                 Location: {{ event.location }}
               </p>
               <a
                 href="{{ event.ticket_link }}"
-                class="btn btn"
+                class="btn btn d-flex justify-content-center"
                 style="background-color: #d12d9c; color: black"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -44,4 +44,15 @@
     </div>
   </div>
 </section>
+{% block extra_styles %}
+<style>
+  .card-img-top {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+</style>
+{% endblock %}
 {% endblock %}
