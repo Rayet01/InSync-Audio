@@ -44,10 +44,15 @@ def profile_edit(request):
 
     return render(request, 'users/profile_edit.html', {'form': form})
 
+
 @login_required
 def profile_delete(request):
-    profile = get_object_or_404(Profile, user=request.user)
-    if request.method == 'POST':
-        profile.delete()
-        return redirect('home')  # Redirect to the home page
-    return render(request, 'users/profile_delete.html', {'profile': profile})
+    user = request.user
+    if request.method == "POST":
+        # Delete the user and all associated data
+        user.delete()
+
+        messages.success(request, "Your account has been deleted successfully.")
+        return redirect('home')  # Redirect to a page after deletion (e.g., homepage)
+
+    return render(request, 'users/profile_delete.html', {'user': user})
