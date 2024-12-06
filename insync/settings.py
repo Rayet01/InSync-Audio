@@ -29,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['8000-rayet01-insyncaudio-g50u6tfz55b.ws.codeinstitute-ide.net', 'insyncaudio-8e866be95d5d.herokuapp.com']
 
