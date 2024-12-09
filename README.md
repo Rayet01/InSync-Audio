@@ -37,3 +37,38 @@ InSync Audio brings you the best in music event management and guest mixes. It o
 InSync Audio is a platform dedicated to music enthusiasts. From viewing upcoming events to exploring guest mixes with real-time sound wave visualization, the app provides a user-centric experience. Features like profile management, notifications, and CRUD functionalities empower users to interact effectively.
 
 ---
+
+## Features
+
+### Navigation
+
+- **Dynamic Navigation Bar**: Adjusts links based on the user's login status.
+- **Responsive Design**: Works seamlessly across all devices.
+
+![Navigation Example](documentations/navigation.png)
+
+### Event Listings
+
+- Browse upcoming events with images, dates, and locations.
+- "Buy Tickets" links open in new tabs.
+
+![Event Listings](documentations/event_listings.png)
+
+### Guest Mixes
+
+- Explore guest mixes with real-time sound wave visualization and play/pause functionality.
+
+![Guest Mixes](documentations/guest_mixes.png)
+
+### User Profile Management
+
+- Edit your profile information, including bio, location, and avatar.
+- Delete your account with all associated data.
+
+![Profile Management](documentations/profile.png)
+
+### Notifications
+
+- Receive success or error messages for profile edits and account actions.
+
+---
