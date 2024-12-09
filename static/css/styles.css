@@ -2,4 +2,12 @@ body {
 overflow-x: hidden;
 width: 100vw;
 max-width: 100vw;
+overflow-y: auto; /* Ensure scrolling works */
+  scrollbar-width: none; /* Firefox */
 }
+
+body::-webkit-scrollbar {
+    width: 0px; /* For Chrome, Safari, and Edge */
+    height: 0px;
+    background: transparent; /* hides the scrollbar background */
+  }
