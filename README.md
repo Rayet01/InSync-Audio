@@ -103,3 +103,14 @@ Wireframes were created using **Balsamiq** to guide the layout and functionality
   - Receive notifications for completed actions.
 
 ---
+
+## Technologies Used
+
+- **Frontend**: HTML5, CSS3, Bootstrap, JavaScript (WaveSurfer.js for audio visualization).
+- **Backend**: Python, Django.
+- **Database**: PostgreSQL.
+- **Hosting**: Heroku, Cloudinary for media storage.
+- **Version Control**: Git and GitHub.
+- **Tools**: Balsamiq for wireframes, Chrome DevTools for testing.
+
+---
