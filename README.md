@@ -124,6 +124,6 @@ A project board was maintained to track progress and ensure timely delivery of f
 - **In Progress**: Features currently being developed.
 - **Completed**: Finished features ready for deployment.
 
-View the **Project Board**: [GitHub Project Board](Your_Project_Board_Link)
+View the **Project Board**: [GitHub Project Board](https://github.com/users/Rayet01/projects/8/views/1?visibleFields=%5B%22Title%22%2C%22Assignees%22%2C%22Status%22%2C%22Labels%22%5D)
 
 ---
