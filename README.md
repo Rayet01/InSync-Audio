@@ -72,3 +72,34 @@ InSync Audio is a platform dedicated to music enthusiasts. From viewing upcoming
 - Receive success or error messages for profile edits and account actions.
 
 ---
+
+## UX Design
+
+The design focuses on a modern, user-friendly interface that prioritizes usability and aesthetics.
+
+### Wireframes
+
+Wireframes were created using **Balsamiq** to guide the layout and functionality for each page:
+- **Home Page**: Carousel, featured guest mix.
+- **Events Page**: Grid-based listing of upcoming events.
+- **Guest Mixes Page**: Visualized sound waves with play/pause functionality.
+- **Profile Page**: Editable fields for personalization and easy account management.
+
+![Wireframes Preview](documentations/wireframes.png)
+
+### Accessibility
+
+- **Responsive Design**: Ensures usability on all devices.
+- **Clear Visual Hierarchy**: Makes navigation intuitive.
+- **Alt Text**: Included for all images for better screen reader support.
+
+### User Stories
+
+- **As a user, I want to**:
+  - Register and log in to manage my experience.
+  - Browse events and purchase tickets.
+  - Explore and listen to guest mixes.
+  - Manage my profile, including updating information and deleting my account.
+  - Receive notifications for completed actions.
+
+---
