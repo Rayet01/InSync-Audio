@@ -145,7 +145,7 @@ All HTML files were validated using **W3C HTML Validator**.
 #### CSS Validation
 All CSS styles were validated using **W3C CSS Validator**.
 - **Base Styles**: Passed with no issues.
-- **Home Page Specific CSS**: Passed with no issues.
+- **Profile Page Specific CSS**: Passed with no issues.
 - **Event Cards CSS**: Passed with no issues.
 
 #### JavaScript Validation
