@@ -114,3 +114,16 @@ Wireframes were created using **Balsamiq** to guide the layout and functionality
 - **Tools**: Balsamiq for wireframes, Chrome DevTools for testing.
 
 ---
+
+## Project Board
+
+A project board was maintained to track progress and ensure timely delivery of features. The board included:
+
+- **Backlog**: Tasks for future iterations.
+- **To-Do**: Tasks pending implementation.
+- **In Progress**: Features currently being developed.
+- **Completed**: Finished features ready for deployment.
+
+View the **Project Board**: [GitHub Project Board](Your_Project_Board_Link)
+
+---
