@@ -11,7 +11,10 @@ def register(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, "Registration successful! Please log in.")
             return redirect('login')  # Redirect to login after successful signup
+        else:
+            messages.error(request, "Registration failed. Please correct the errors below.")
     else:
         form = CustomUserCreationForm()
     return render(request, 'users/register.html', {'form': form})
@@ -19,7 +22,6 @@ def register(request):
 @login_required
 def profile(request):
     return render(request, 'users/profile.html')
-
 
 @login_required
 def profile_detail(request):
@@ -38,21 +40,22 @@ def profile_edit(request):
             form.save()  # Save the profile data
             user.email = form.cleaned_data.get('email')  # Save email separately
             user.save()  # Save the user instance
-            return redirect('profile')  # Redirect to the profile page
+            messages.success(request, "Your profile was updated successfully!")
+            return redirect('profile')  # Redirect to profile page
+        else:
+            messages.error(request, "There was an error updating your profile. Please try again.")
     else:
         form = ProfileForm(instance=profile, user=user)
 
     return render(request, 'users/profile_edit.html', {'form': form})
 
-
 @login_required
 def profile_delete(request):
     user = request.user
     if request.method == "POST":
-        # Delete the user and all associated data
+        # Delete the user and all  data
         user.delete()
-
-        messages.success(request, "Your account has been deleted successfully.")
-        return redirect('home')  # Redirect to a page after deletion (e.g., homepage)
+        messages.success(request, "Your account and all associated data have been deleted successfully.")
+        return redirect('home')  # Redirect to home
 
     return render(request, 'users/profile_delete.html', {'user': user})
