@@ -146,3 +146,20 @@ View the **Project Board**: [GitHub Project Board](https://github.com/users/Raye
 - **Python**: Validated using CI Python Linter.
 
 ---
+
+## Deployment
+
+1. **Deployment**: Hosted on Heroku with `Procfile` for process management.
+2. **Static and Media Files**: Stored using Cloudinary for efficient delivery.
+
+---
+
+## Credits
+
+- **Code Institute LMS**: For foundational lessons.
+- **Pexels**: For placeholder images.
+- **WaveSurfer.js**: For audio visualization functionality.
+- **Community Tutorials**: Inspiration for CRUD operations and dynamic design.
+- **ChatGPT**: Assistance with WaveSurfer.js, text content and documentation.
+
+[Back to Top](#insync-audio)
