@@ -127,3 +127,22 @@ A project board was maintained to track progress and ensure timely delivery of f
 View the **Project Board**: [GitHub Project Board](https://github.com/users/Rayet01/projects/8/views/1?visibleFields=%5B%22Title%22%2C%22Assignees%22%2C%22Status%22%2C%22Labels%22%5D)
 
 ---
+
+## Testing
+
+### Manual Testing
+
+| **Page**         | **Action**                | **Result** |
+|-------------------|---------------------------|------------|
+| Navigation        | Links redirect correctly | Pass       |
+| Event Listings    | Images load correctly    | Pass       |
+| Guest Mixes       | Play/pause works         | Pass       |
+| Profile           | Edit and delete profile  | Pass       |
+
+### Validators
+
+- **HTML**: No errors reported by W3 Validator.
+- **CSS**: Passed with minor warnings for vendor-specific properties.
+- **Python**: Validated using CI Python Linter.
+
+---
