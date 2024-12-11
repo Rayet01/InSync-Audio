@@ -7,6 +7,7 @@ class GuestMix(models.Model):
     description = models.TextField()
     upload_date = models.DateField()
     image = models.ImageField(upload_to='guest_mix_images/', null=True, blank=True)
+    is_featured = models.BooleanField(default=False) 
 
     def __str__(self):
         return self.title
