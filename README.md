@@ -27,6 +27,7 @@ InSync Audio brings you the best in music event management and guest mixes. It o
 - [Technologies Used](#technologies-used)
 - [Project Board](#project-board)
 - [Testing](#testing)
+- [Debugging Process](#debugging-process)
 - [Deployment](#deployment)
 - [Credits](#credits)
 
@@ -204,6 +205,84 @@ The application was tested across major browsers for compatibility:
 | Mozilla Firefox | Fully Functional |
 | Microsoft Edge | Fully Functional |
 | Safari        | Fully Functional |
+
+---
+
+# Debugging Process
+
+Below are some of the notable issues encountered during the development of the project and their resolutions.
+
+---
+
+## **1. Invalid `ALLOWED_HOSTS` Configuration**
+**Issue:**  
+Deployment on Heroku resulted in a `DisallowedHost` error due to an invalid `HTTP_HOST` header.
+
+**Resolution:**  
+Updated the `ALLOWED_HOSTS` list to include the Heroku domain.
+
+---
+
+## **2. TemplateNotFound Errors**
+**Issue:**  
+Certain templates were not being loaded, resulting in `TemplateDoesNotExist` errors (e.g., `base.html`, `users/login.html`).
+
+**Resolution:**  
+Ensured templates were placed in the correct directory and updated the `TEMPLATES` configuration in `settings.py`.
+
+---
+
+## **3. Profile Deletion**
+**Issue:**  
+The profile delete functionality only removed the profile data but did not delete the associated user account.
+
+**Resolution:**  
+Updated the functionality to delete both the user account and all associated data.
+
+---
+
+## **4. ModuleNotFoundError: `PIL`**
+**Issue:**  
+Uploading an image resulted in a `ModuleNotFoundError` for `PIL` on Heroku, despite the local environment working correctly.
+
+**Resolution:**  
+Ensured `Pillow` was installed and included in the `requirements.txt` file. Re-deployed the app to Heroku.
+
+---
+
+## **5. CSS and Responsive Design Issues**
+**Issue:**  
+CSS properties like `overflow-x: hidden` and fixed image sizes were not applied consistently across pages.
+
+**Resolution:**  
+Correctly linked the CSS file and applied consistent styles for images using `object-fit: cover` and fixed dimensions.
+
+---
+
+## **6. Missing Notifications for User Actions**
+**Issue:**  
+Users were not receiving any feedback for actions like profile updates or registration.
+
+**Resolution:**  
+Added user notifications using Django messages framework.
+
+---
+
+## **7. Profile Edit Fails on New Accounts**
+**Issue:**  
+Editing a new profile caused an `IntegrityError` because `bio` and other fields were non-nullable.
+
+**Resolution:**  
+Updated the `Profile` model to allow optional fields and applied migrations.
+
+---
+
+## **8. Scrollbar Visibility**
+**Issue:**  
+Scrollbar was visible when `overflow-x: hidden` was applied.
+
+**Resolution:**  
+Ensured `overflow-x` was applied correctly in the global CSS and verified browser compatibility.
 
 ---
 
