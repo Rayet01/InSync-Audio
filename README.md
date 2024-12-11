@@ -26,6 +26,7 @@ InSync Audio brings you the best in music event management and guest mixes. It o
 - [UX Design](#ux-design)
 - [Technologies Used](#technologies-used)
 - [Project Board](#project-board)
+- [Entity Relationship Diagram (ERD)](#entity-relationship-diagram-erd)
 - [Testing](#testing)
 - [Debugging Process](#debugging-process)
 - [Deployment](#deployment)
@@ -126,6 +127,14 @@ A project board was maintained to track progress and ensure timely delivery of f
 - **Completed**: Finished features ready for deployment.
 
 View the **Project Board**: [GitHub Project Board](https://github.com/users/Rayet01/projects/8/views/1?visibleFields=%5B%22Title%22%2C%22Assignees%22%2C%22Status%22%2C%22Labels%22%5D)
+
+---
+
+## Entity Relationship Diagram (ERD)
+
+The **Entity Relationship Diagram (ERD)** for the Insync Audio project is designed to visualize the relationships between the different entities within the system. Below is a diagram of the database tables and their relationships:
+
+![Profile Management](documentations/ERD.png)
 
 ---
 
@@ -300,5 +309,6 @@ Ensured `overflow-x` was applied correctly in the global CSS and verified browse
 - **WaveSurfer.js**: For audio visualization functionality.
 - **Community Tutorials**: Inspiration for CRUD operations and dynamic design.
 - **ChatGPT**: Assistance with WaveSurfer.js, text content and documentation.
+- **Dbdiagram.io**: For ERD diagram.
 
 [Back to Top](#insync-audio)
