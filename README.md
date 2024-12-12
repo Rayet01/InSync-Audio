@@ -83,9 +83,6 @@ The design focuses on a modern, user-friendly interface that prioritizes usabili
 
 Wireframes were created using **Balsamiq** to guide the layout and functionality for each page:
 - **Home Page**: Carousel, featured guest mix.
-- **Events Page**: Grid-based listing of upcoming events.
-- **Guest Mixes Page**: Visualized sound waves with play/pause functionality.
-- **Profile Page**: Editable fields for personalization and easy account management.
 
 ![Wireframes Preview](documentations/wireframes.png)
 
